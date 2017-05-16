@@ -38,5 +38,15 @@ public class StartProvider {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	public void testP2P() {
+		context=new ClassPathXmlApplicationContext("p2p/spring.xml");
+		context.start();
+		try {
+			System.in.read();             //阻塞方式，让当前服务当代
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

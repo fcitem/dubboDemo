@@ -26,11 +26,18 @@ public class InvokeProvider {
 
 	@After
 	public void tearDown() throws Exception {
-	}
+	}  
 
 	@Test
 	public void test() {
 		context=new ClassPathXmlApplicationContext("spring.xml");
+		context.start();
+		RemoteService demoservice=(RemoteService) context.getBean("demoService");
+		System.out.println(demoservice.sayDubbo("fc"));
+	}
+	@Test
+	public void testDubboP2P() {
+		context=new ClassPathXmlApplicationContext("p2p/spring.xml");
 		context.start();
 		RemoteService demoservice=(RemoteService) context.getBean("demoService");
 		System.out.println(demoservice.sayDubbo("fc"));
