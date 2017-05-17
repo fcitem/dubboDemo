@@ -20,11 +20,7 @@
  
     <!-- 声明需要暴露的服务接口 -->
      <!-- 和本地bean一样实现服务 -->
-    <bean id="demoService" class="com.dubbo.provider.service.impl.RemoteServiceImpl" />
-    <dubbo:service interface="com.dubbo.provider.service.RemoteService" ref="demoService" />
-    
-    <!--  测试客户端不需要服务端接口api的调用-->
-    <bean id="generaticService" class="com.dubbo.provider.service.impl.RemoteGeneraticServiceImpl" />
-    <dubbo:service interface="com.dubbo.provider.service.RemoteGeneraticService" ref="generaticService" />
-    
+    <bean id="demoService" class="com.dubbo.provider.service.impl.RemoteGeneraticServiceImpl" />
+    <dubbo:service interface="com.dubbo.provider.service.RemoteGeneraticService" ref="demoService" />
+ 
 </beans>

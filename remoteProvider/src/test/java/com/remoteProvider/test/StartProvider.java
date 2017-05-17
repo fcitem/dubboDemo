@@ -38,9 +38,29 @@ public class StartProvider {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * @author fengchao
+	 * @data 2017年5月17日
+	 * @注释 测试点对点直连
+	 */
 	@Test
 	public void testP2P() {
 		context=new ClassPathXmlApplicationContext("p2p/spring.xml");
+		context.start();
+		try {
+			System.in.read();             //阻塞方式，让当前服务当代
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * @author fengchao
+	 * @data 2017年5月17日
+	 * @注释 启动测试客户端泛化引用
+	 */
+	@Test
+	public void testGeneratic() {
+		context=new ClassPathXmlApplicationContext("Generatical/spring.xml");
 		context.start();
 		try {
 			System.in.read();             //阻塞方式，让当前服务当代
