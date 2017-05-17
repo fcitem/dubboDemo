@@ -6,6 +6,7 @@
     <groupId>dubbo</groupId>
     <artifactId>dubboDemo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <!-- <relativePath>../dubboDemo</relativePath> -->
   </parent>
   <artifactId>remoteProvider</artifactId>
   <packaging>war</packaging>
