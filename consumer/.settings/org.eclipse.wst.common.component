@@ -4,6 +4,9 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/main/resources/dubbo2.properties"/>
+        <wb-resource deploy-path="/" source-path="/main/webapp"/>
+        <wb-resource deploy-path="/" source-path="/main/resources"/>
         <property name="context-root" value="consumer"/>
         <property name="java-output-path" value="/consumer/target/classes"/>
     </wb-module>

@@ -38,7 +38,7 @@
 			<artifactId>spring</artifactId>
 			<version>2.5.6.SEC03</version>
 		</dependency>
-		<!-- 此包针对于zookeper注册服务引入，另外需要建立log4j.properties配置文件   -->
+		<!-- 此包针对于zookeper注册服务引入，另外需要建立log4j.properties配置文件 -->
 		<dependency>
 			<groupId>com.101tec</groupId>
 			<artifactId>zkclient</artifactId>
@@ -49,5 +49,28 @@
 	<modules>
 		<module>remoteProvider</module>
 		<module>consumer</module>
+		<!-- <module>dubboCommon</module> -->
+		<module>dubboCommon</module>
 	</modules>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+				<!-- <warSourceDirectory>../src/main/resources</warSourceDirectory> -->
+				<containerConfigXML></containerConfigXML>
+				<!--   在此可以配置module各模块的打包规则      -->
+				<warSourceIncludes></warSourceIncludes>
+					<webResources>
+						<resource>
+							<directory>src/main/resources</directory>
+							<includes>*.properties</includes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

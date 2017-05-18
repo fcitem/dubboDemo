@@ -1,9 +1,11 @@
 package consumer;
 
+import java.io.IOException;
 import java.util.concurrent.Future;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,7 +13,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.service.GenericService;
+import com.dubbo.provider.service.CallbackListener;
+import com.dubbo.provider.service.CallbackService;
 import com.dubbo.provider.service.RemoteService;
+import com.dubbo.provider.service.impl.NofifyImpl;
 
 public class InvokeProvider {
 
@@ -104,12 +109,21 @@ public class InvokeProvider {
 	public void testSyncNoApi(){
 		context=new ClassPathXmlApplicationContext("spring.xml");
 		context.start();
+		//不通过spring配置文件调用，不完整，后面完善
 //		ReferenceConfig<GenericService> reference = new ReferenceConfig<GenericService>(); // 该实例很重量，里面封装了所有与注册中心及服务提供方连接，请缓存
 //		reference.setInterface("com.dubbo.provider.service.RemoteGeneraticService"); // 弱类型接口名 
 //		reference.setVersion("1.0.0"); 
 //		reference.setGeneric(true); // 声明为泛化接口 
 //		reference.setAsync(true);   //异步调用
 //		reference.setCache("lru");    //设置缓存策略
+//		List<MethodConfig> methods = new ArrayList<MethodConfig>();
+//		MethodConfig method = new MethodConfig();
+//		method.setName("testSync");
+//		method.setTimeout(10000);
+//		method.setRetries(0);
+//		method.setAsync(true);          //异步调用
+//		methods.add(method);
+//		reference.setMethods(methods);    //设置方法级配置
 //		GenericService service=reference.get();   // 用com.alibaba.dubbo.rpc.service.GenericService可以替代所有接口引用 
 		GenericService service = (GenericService) context.getBean("generService");
 		service.$invoke("testSync", new String[] { "java.lang.String" }, new Object[] { "fc" });
@@ -122,6 +136,55 @@ public class InvokeProvider {
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	/**
+	 * @author fengchao
+	 * @data 2017年5月18日
+	 * @注释 测试服务器端根据回调参数回调客户端代码
+	 */
+	@Test
+	public void testCallback(){
+		context=new ClassPathXmlApplicationContext("spring.xml");
+		context.start();
+		CallbackService service=(CallbackService) context.getBean("callbackService");
+		service.addListener("test.bar",new CallbackListener() {
+			
+			@Override
+			public void changed(String msg) {
+				System.out.println("*********************receive server call back msg:"+msg+"****************************");
+				
+			}
+		});
+		try {
+			System.in.read();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @author fengchao
+	 * @throws InterruptedException 
+	 * @data 2017年5月18日
+	 * @注释 测试基于dubbo的事件通知效果
+	 */
+	@Test
+	public void testNofify() throws InterruptedException{
+		context=new ClassPathXmlApplicationContext("spring.xml");
+		context.start();
+		int requestId=2;
+		GenericService service = (GenericService) context.getBean("nofifyService");
+		NofifyImpl nofify=(NofifyImpl) context.getBean("nofifyImpl");
+		Object ret=service.$invoke("get",new String[] {"java.lang.Integer"}, new Object[]{requestId});   //调用远程服务
+		Assert.assertEquals(null, ret);
+		for (int i = 0; i < 10; i++) {
+		    if (!nofify.ret.containsKey(requestId)) {
+		        Thread.sleep(200);
+		    } else {
+		        break;
+		    }
 		}
 	}
 }
