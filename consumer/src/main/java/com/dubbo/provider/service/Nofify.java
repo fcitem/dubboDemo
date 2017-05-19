@@ -13,7 +13,7 @@ public interface Nofify {
 	 * @data 2017年5月18日
 	 * @注释 方法返回后触发
 	 */
-	public void onreturn(String msg, Integer id);
+	public void onreturn(String msg);
 	 /**
 	 * @author fengchao
 	 * @data 2017年5月18日

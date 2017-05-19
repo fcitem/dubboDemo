@@ -10,11 +10,11 @@ public class NofifyImpl implements Nofify {
 	public Map<Integer, String> ret = new HashMap<Integer, String>();
     public Map<Integer, Throwable> errors = new HashMap<Integer, Throwable>();
 	@Override
-	public void onreturn(String msg, Integer id) {
+	public void onreturn(String msg) {
 		// TODO Auto-generated method stub
 
 		System.out.println("**************cosumer receive onreturn:" + msg+"****************");
-	    ret.put(id, msg);
+//	    ret.put(msg);
 	}
 
 	@Override

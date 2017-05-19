@@ -5,7 +5,7 @@ import com.dubbo.provider.service.NofifyService;
 public class NofifyServiceImpl implements NofifyService{
 
 	@Override
-	public String get(int id) {
+	public String get(Integer id) {
 		// TODO Auto-generated method stub
 		return "*********************server receive msg:===="+id+"******************************";
 	}

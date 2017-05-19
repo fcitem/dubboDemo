@@ -33,6 +33,6 @@
 	<bean id="nofifyImpl" class="com.dubbo.provider.service.impl.NofifyImpl"/>
 	<dubbo:reference id="nofifyService" interface="com.dubbo.provider.service.NofifyService" version="1.0.0" group="cn" generic="true">
 	<!-- 在调用前会触发oninvoke,调用后onreturn,出现异常时onthrow三个事件,可以配置当事件发生时,通知哪个类的哪个方法 比如onreturn=***表示调用之后的事件绑定到***方法   -->
-	   <dubbo:method name="get" async="true" onreturn="nofifyImpl.onreturn" onthrow="nofifyImpl.onthrow" />
+	   <dubbo:method name="get" async="false" onreturn="nofifyImpl.onreturn" onthrow="nofifyImpl.onthrow" />
 	</dubbo:reference>
 </beans>

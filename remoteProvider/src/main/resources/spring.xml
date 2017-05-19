@@ -25,19 +25,20 @@
 	<!-- 声明需要暴露的服务接口 -->
 	<!-- 和本地bean一样实现服务 -->
 	<bean id="demoService" class="com.dubbo.provider.service.impl.RemoteServiceImpl" />
+	<!--  delay表示延迟到Spring初始化完成后，再暴露服务-->
 	<dubbo:service interface="com.dubbo.provider.service.RemoteService"
-		ref="demoService" />
+		ref="demoService" delay="-1" />
 
 	<!-- 测试客户端不需要服务端接口api的调用 -->
 	<bean id="generaticService"
 		class="com.dubbo.provider.service.impl.RemoteGeneraticServiceImpl" />
 	<dubbo:service interface="com.dubbo.provider.service.RemoteGeneraticService"
-		ref="generaticService" />
+		ref="generaticService" delay="-1" />
 		
 		<!--  测试参数回调  如果callback为true，服务提供方将生成反向代理，可以从服务提供方反向调用消费方，通常用于事件推送-->
 	<bean id="callbackService" class="com.dubbo.provider.service.impl.CallbackServiceImpl" />
 	<dubbo:service interface="com.dubbo.provider.service.CallbackService"
-		ref="callbackService" connections="1" callbacks="1000">
+		ref="callbackService" connections="1" callbacks="1000" delay="-1">
 		<dubbo:method name="addListener">
 			<dubbo:argument index="1" callback="true" />
 			<!--也可以通过指定参数类型的方式 -->
