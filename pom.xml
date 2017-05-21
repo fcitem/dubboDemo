@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -49,7 +50,6 @@
 	<modules>
 		<module>remoteProvider</module>
 		<module>consumer</module>
-		<!-- <module>dubboCommon</module> -->
 		<module>dubboCommon</module>
 	</modules>
 	<build>
@@ -59,10 +59,10 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.2</version>
 				<configuration>
-				<!-- <warSourceDirectory>../src/main/resources</warSourceDirectory> -->
-				<containerConfigXML></containerConfigXML>
-				<!--   在此可以配置module各模块的打包规则      -->
-				<warSourceIncludes></warSourceIncludes>
+					<!-- <warSourceDirectory>../src/main/resources</warSourceDirectory> -->
+					<containerConfigXML />
+					<!-- 在此可以配置module各模块的打包规则 -->
+					<warSourceIncludes />
 					<webResources>
 						<resource>
 							<directory>src/main/resources</directory>

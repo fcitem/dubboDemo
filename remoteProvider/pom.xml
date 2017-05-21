@@ -14,7 +14,7 @@
 	<name>remoteProvider Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
-	<!--  引入公共配置模块-->
+		<!-- 引入公共配置模块 -->
 		<dependency>
 			<groupId>dubboCommon</groupId>
 			<artifactId>dubboCommon</artifactId>
