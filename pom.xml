@@ -11,7 +11,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>4.11</junit.version>
-		<dubbo.version>2.5.3</dubbo.version>
+		<dubbo.version>2.5.6</dubbo.version>
 	</properties>
 
 	<dependencies>
@@ -33,24 +33,25 @@
 			<artifactId>javassist</artifactId>
 			<version>3.15.0-GA</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring</artifactId>
-			<version>2.5.6.SEC03</version>
-		</dependency>
 		<!-- 此包针对于zookeper注册服务引入，另外需要建立log4j.properties配置文件 -->
 		<dependency>
 			<groupId>com.101tec</groupId>
 			<artifactId>zkclient</artifactId>
 			<version>0.10</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.3.10.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 	<modules>
-		<module>remoteProvider</module>
-		<module>consumer</module>
-		<module>dubboCommon</module>
+		<module>dubbo-consumer</module>
+		<module>dubbo-provider</module>
+		<module>dubbo-common</module>
 	</modules>
 	<build>
 		<plugins>

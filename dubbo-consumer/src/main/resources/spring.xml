@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+                        http://code.alibabatech.com/schema/dubbo
+                        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="consumer-of-sayDubbo" />
+    <context:property-placeholder location="classpath*:dubbo.properties" ignore-unresolvable="true"/>
+
+    <!-- 消费方调用过程缺省拦截器，将拦截所有reference，也可以每个refrence单独拦截 -->
+    <dubbo:consumer filter="testFilter"/>
+    
+	<!-- 使用zookeeper注册中心暴露服务地址，如果不写protocol的话，可以在address的最前面加上协议再加地址如：address="zookeeper://192.168.0.37:2181" -->
+	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
+
+	<!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
+	<dubbo:reference id="demoService" interface="com.dubbo.provider.service.RemoteService" filter="testFilter">
+	     <!-- 客户端基于nio异步调用服务端接口	 -->
+		<dubbo:method name="testSyncCall" async="true"></dubbo:method>
+		<dubbo:method name="testSyncCallisReturn" async="true"></dubbo:method>
+	</dubbo:reference>
+	<!-- 配置多个服务接口 -->
+	<dubbo:reference id="generService" interface="com.dubbo.consumer.service.RemoteGeneraticService" generic="true">
+		<dubbo:method name="testSync" async="true"></dubbo:method>
+	</dubbo:reference>
+	<!--  服务端参数回调配置  -->
+	<dubbo:reference id="callbackService" interface="com.dubbo.provider.service.CallbackService"/>
+	<bean id="nofifyImpl" class="com.dubbo.provider.service.impl.NofifyImpl"/>
+	<dubbo:reference id="nofifyService" interface="com.dubbo.provider.service.NofifyService" version="1.0.0" group="cn" generic="true">
+	<!-- 在调用前会触发oninvoke,调用后onreturn,出现异常时onthrow三个事件,可以配置当事件发生时,通知哪个类的哪个方法 比如onreturn=***表示调用之后的事件绑定到***方法   -->
+	   <dubbo:method name="get" async="false" onreturn="nofifyImpl.onreturn" onthrow="nofifyImpl.onthrow" />
+	</dubbo:reference>
+	
+	<!--  注解配置引用服务	-->
+	<dubbo:annotation package="com.dubbo.provider.service" />
+</beans>
